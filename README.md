@@ -34,13 +34,13 @@ cmake -DFAMILY=rp2040 ..
 make
 ```
 
-Add the files under examples:
+Add the files under ```examples/my_transmitter/```:
 ```
 my_transmitter.c
 CMakeLists.txt
 ```
 
-Edit CMakeLists.txt in examples:
+Edit CMakeLists.txt in ```/pico-nrf24/examples```:
 
 ```
 add_subdirectory(primary_receiver)
