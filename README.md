@@ -17,7 +17,7 @@ The Pico Pi eaxmples are derived from the ones here: https://github.com/AndyRids
 
 
 <p align="center">
-  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01Pinout2.jpg" width="800" title="nRF24L01 Addresses">
+  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01Pinout2.jpg" width="600" title="nRF24L01 Addresses">
 </p>
 
 ### Addresses for nRF24L01
