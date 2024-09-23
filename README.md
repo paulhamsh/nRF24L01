@@ -22,6 +22,7 @@ The Pico Pi eaxmples are derived from the ones here: https://github.com/AndyRids
 
 ### Build for Pico Pi (using wsl)
 
+```
 git clone https://github.com/AndyRids/pico-nrf24.git
 cd pico-nrf24
 export PICO_SDK_PATH=~/pico_base/pico-sdk
@@ -31,10 +32,15 @@ mkdir build
 cd build
 cmake -DFAMILY=rp2040 ..
 make
+```
 
-Add the files under examples
+Add the files under examples:
+```
+my_transmitter.c
+CMakeLists.txt
+```
 
-Add this to CMakeLists.txt in examples:
+Edit CMakeLists.txt in examples:
 
 ```
 add_subdirectory(primary_receiver)
