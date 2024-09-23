@@ -15,6 +15,11 @@ Pico Pi library:   https://github.com/AndyRids/pico-nrf24
 The ESP examples here were heavily amended from a variety of sources.     
 The Pico Pi eaxmples are derived from the ones here: https://github.com/AndyRids/pico-nrf24/tree/main/examples     
 
+
+<p align="center">
+  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01Pinout.jpg" width="800" title="nRF24L01 Addresses">
+</p>
+
 ### Addresses for nRF24L01
 
 This is my understanding of the addressing scheme.   
