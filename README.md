@@ -20,8 +20,10 @@ The Pico Pi eaxmples are derived from the ones here: https://github.com/AndyRids
 This is my understanding of the addressing scheme.   
 Forget a notion that each nRF24L01 has 'an address'. This is not helpful. Each nRF24L01 can 'listen' to up to six addresses, and therefore process messages sent to these addresses.  
 
+https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01Addresses.jpg
+
 <p align="center">
-  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01Addresses.jpg width="400" title="nRF24L01 Addresses">
+  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01Addresses.jpg" width="400" title="nRF24L01 Addresses">
 </p>
 
 
