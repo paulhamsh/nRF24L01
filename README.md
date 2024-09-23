@@ -20,6 +20,32 @@ The Pico Pi eaxmples are derived from the ones here: https://github.com/AndyRids
   <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01Pinout2.jpg" width="600" title="nRF24L01 Addresses">
 </p>
 
+### Build for Pico Pi (using wsl)
+
+git clone https://github.com/AndyRids/pico-nrf24.git
+cd pico-nrf24
+export PICO_SDK_PATH=~/pico_base/pico-sdk
+
+cp ~/pico_base/pico-sdk/external/pico_sdk_import.cmake    .
+mkdir build
+cd build
+cmake -DFAMILY=rp2040 ..
+make
+
+Add the files under examples
+
+Add this to CMakeLists.txt in examples:
+
+```
+add_subdirectory(primary_receiver)
+add_subdirectory(primary_transmitter)
+add_subdirectory(my_transmitter)
+```
+
+
+
+
+
 ### Addresses for nRF24L01
 
 This is my understanding of the addressing scheme.   
