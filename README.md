@@ -1,5 +1,25 @@
 # nRF24L01
 Examples for ESP32 and Pico Pi to use nRF24L01
+Set up for the keyestrudio ESP32 board, an M5Stack Core 2 and two Pico Pis.   
+
+Useful sources:
+
+Datasheet:         https://www.sparkfun.com/datasheets/Components/nRF24L01_prelim_prod_spec_1_2.pdf
+Nordic:            https://www.nordicsemi.com/Products/nRF24-series
+ESP32 library:     https://github.com/nRF24/RF24
+Documentation:     https://nrf24.github.io/RF24/
+Pico Pi library:   https://github.com/AndyRids/pico-nrf24
+                   (This is just one library but I like it - it is clear and logical)   
+                   
+
+
+
+### Addresses for nRF24L01
+
+This is my understanding of the addressing scheme.   
+Forget a notion that each nRF24L01 has 'an address'. This is not helpful. Each nRF24L01 can 'listen' to up to six addresses, and therefore process messages sent to these addresses.  
+
+
 
 ### Pico Pi SPI mappings
 
