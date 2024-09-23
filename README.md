@@ -12,7 +12,8 @@ Pico Pi library:   https://github.com/AndyRids/pico-nrf24
                    (This is just one library but I like it - it is clear and logical)   
 ```                   
 
-
+The ESP examples here were heavily amended from a variety of sources.     
+The Pico Pi eaxmples are derived from the ones here: https://github.com/AndyRids/pico-nrf24/tree/main/examples     
 
 ### Addresses for nRF24L01
 
