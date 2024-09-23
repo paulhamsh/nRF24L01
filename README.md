@@ -20,6 +20,9 @@ The Pico Pi eaxmples are derived from the ones here: https://github.com/AndyRids
 This is my understanding of the addressing scheme.   
 Forget a notion that each nRF24L01 has 'an address'. This is not helpful. Each nRF24L01 can 'listen' to up to six addresses, and therefore process messages sent to these addresses.  
 
+<p align="center">
+  <img src="https://github.com/paulhamsh//lob/main/nRF24L01 Addresses.jpg width="400" title="nRF24L01 Addresses">
+</p>
 
 
 ### Pico Pi SPI mappings
