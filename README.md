@@ -1,7 +1,7 @@
 # nRF24L01
 Examples for ESP32 and Pico Pi to use nRF24L01
 
-###Pico Pi SPI mappings
+### Pico Pi SPI mappings
 
 To check the SPI pins selected are valid, they must match the appropriate SPI bank and also be the right map for that pin type.   
 SPI bank can be found from (value & 0x80 >> 3)   
