@@ -15,9 +15,16 @@ Pico Pi library:   https://github.com/AndyRids/pico-nrf24
 The ESP examples here were heavily amended from a variety of sources.     
 The Pico Pi eaxmples are derived from the ones here: https://github.com/AndyRids/pico-nrf24/tree/main/examples     
 
+### nRF24L01 pinout
 
 <p align="center">
   <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nrf24L01_pinout.jpg" width="600" title="nRF24L01 pinout">
+  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nrf24L01_expander.jpg" width="600" title="nRF24L01 expander">
+</p>
+
+### nRF24L01 expander board pinout
+
+<p align="center">
   <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nrf24L01_expander.jpg" width="600" title="nRF24L01 expander">
 </p>
 
