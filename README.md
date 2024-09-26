@@ -49,7 +49,7 @@ add_subdirectory(my_transmitter)
 ```
 
 
-###Adding new function in Pico Pi library
+### Adding new function in Pico Pi library
 
 Add code to nrf24L01.c    
 
