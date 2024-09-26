@@ -63,22 +63,27 @@ int main(void)
   my_nrf.initialise(&my_config);
   my_nrf.standby_mode();
 
-  typedef struct payload_t { uint8_t one; uint8_t two; } payload_t;
-  payload_t payload = { .one = 0x11, .two = 0x22 };
+  //typedef struct payload_t { uint8_t one; uint8_t two; } payload_t;
+  //payload_t payload = { .one = 0x11, .two = 0x22 };
+  uint8_t payload[5] = {0x11, 0x22, 0x00, 0x00, 0x00};
+
 
   fn_status_t success = 0;
+
 
   while (1) {
     // send to receiver's DATA_PIPE_0 address
     my_nrf.tx_destination((uint8_t[]) {0x31,0x30,0x30,0x30,0x30});
-    success = my_nrf.send_packet(&payload, sizeof(payload));
+    success = my_nrf.send_packet(payload, 2);
 
     if (success)
-      printf("\nPacket sent:- 0x%x 0x%x\n", payload.one, payload.two);
+      //printf("\nPacket sent:- 0x%x 0x%x\n", payload.one, payload.two);
+      printf("\nPacket sent:- 0x%x 0x%x\n", payload[0], payload[1]);
     else
       printf("\nPacket not sent:- Receiver not available.\n");
 
-    payload.two++;
+    //payload.two++;
+    payload[1]++;
 
     sleep_ms(3000);
   }
