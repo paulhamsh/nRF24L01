@@ -49,9 +49,72 @@ add_subdirectory(my_transmitter)
 ```
 
 
+###Adding new function in Pico Pi library
 
+Add code to nrf24L01.c    
 
+```
+/**
+ * Read the size of an available packet in the RX FIFO
+ *
+ * @param size size of buffer
+ *
+ * @return SPI_MNGR_OK (2), ERROR (0)
+ */
 
+fn_status_t nrf_driver_read_packet_size(uint8_t *size) {
+
+  fn_status_t status = SPI_MNGR_OK;
+
+  *size = 0;
+
+  spi_manager_t *spi = &(nrf_driver.user_spi);
+  spi_manager_init_spi(spi->instance, spi->baudrate);
+
+  /**
+   * if dynamic payloads are enabled, read the payload width
+   * via the R_RX_PL_WID command.
+   */
+
+  if (nrf_driver.user_config.dyn_payloads)
+  {
+    uint8_t tx_buffer[2] = { R_RX_PL_WID, NOP };
+    uint8_t rx_buffer[2];
+
+    csn_put_low(nrf_driver.user_pins.csn); // drive CSN pin LOW
+    status = spi_manager_transfer(spi->instance, tx_buffer, rx_buffer, TWO_BYTES);
+    csn_put_high(nrf_driver.user_pins.csn); // drive CSN pin HIGH
+
+    *size = rx_buffer[1];
+  }
+
+  spi_manager_deinit_spi(spi->instance);
+  return status;
+```
+
+Add to ```nrf24L01.h``` in ```nrf_client_t``` as a new function    
+
+```
+// provides access to nrf_driver public functions
+typedef struct nrf_client_s
+{
+  // ..........
+
+  // size of dynamic read buffer
+  fn_status_t (*read_packet_size)(uint8_t *size);
+} nrf_client_t;
+```
+
+Add to  ```nrf24L01.c``` in ```nrf_driver_create_client``` so it can be called.   
+
+```
+fn_status_t nrf_driver_create_client(nrf_client_t *client) {
+   // ....
+  client->read_packet_size = nrf_driver_read_packet_size;
+
+  return NRF_MNGR_OK;
+}
+```
 ### Addresses for nRF24L01
 
 This is my understanding of the addressing scheme.   
