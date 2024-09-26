@@ -51,7 +51,7 @@ add_subdirectory(my_transmitter)
 
 ### Adding new function in Pico Pi library
 
-Add code to nrf24L01.c    
+Add code to nrf24_driver.c    
 
 ```
 /**
@@ -92,7 +92,7 @@ fn_status_t nrf_driver_read_packet_size(uint8_t *size) {
   return status;
 ```
 
-Add to ```nrf24L01.h``` in ```nrf_client_t``` as a new function    
+Add to ```nrf24_driver.h``` in ```nrf_client_t``` as a new function    
 
 ```
 // provides access to nrf_driver public functions
@@ -105,7 +105,7 @@ typedef struct nrf_client_s
 } nrf_client_t;
 ```
 
-Add to  ```nrf24L01.c``` in ```nrf_driver_create_client``` so it can be called.   
+Add to  ```nrf24_driver.c``` in ```nrf_driver_create_client``` so it can be called.   
 
 ```
 fn_status_t nrf_driver_create_client(nrf_client_t *client) {
