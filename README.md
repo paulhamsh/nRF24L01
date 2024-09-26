@@ -52,8 +52,12 @@ add_subdirectory(my_transmitter)
 
 ### Addresses for nRF24L01
 
-This is my understanding of the addressing scheme.   
-Forget a notion that each nRF24L01 has 'an address'. This is not helpful. Each nRF24L01 can 'listen' to up to six addresses, and therefore process messages sent to these addresses.  
+This is my understanding of the addressing scheme.    
+Forget a notion that each nRF24L01 has 'an address'. This is not helpful.   
+Each nRF24L01 can 'listen' to up to six addresses, and therefore process messages sent to these addresses.   
+The transmitting device sends a packet with the chosen address.   
+The receiving device will accept the packet if it is accepting that address.   
+If auto-acknowledge is active, the receiving device will then transmit an acknowledge using the same address - so the transmitting device must now be listening for that address to receive the acknowledgement.   
 
 <p align="center">
   <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01Addresses.jpg" width="800" title="nRF24L01 Addresses">
