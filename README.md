@@ -49,6 +49,20 @@ add_subdirectory(my_transmitter)
 ```
 
 
+
+### Addresses for nRF24L01
+
+This is my understanding of the addressing scheme.   
+Forget a notion that each nRF24L01 has 'an address'. This is not helpful. Each nRF24L01 can 'listen' to up to six addresses, and therefore process messages sent to these addresses.  
+
+<p align="center">
+  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01Addresses.jpg" width="800" title="nRF24L01 Addresses">
+</p>
+
+
+
+
+
 ### Adding new function in Pico Pi library
 
 Add code to nrf24_driver.c    
@@ -116,81 +130,6 @@ fn_status_t nrf_driver_create_client(nrf_client_t *client) {
 }
 ```
 
-### Potential simplifications to nrf24 library on Pico C
-
-```
-static fn_status_t pin_manager_validate(uint8_t copi, uint8_t cipo, uint8_t sck) {
-
-  // Can test the pins are valid by masking and comparing
-  fn_status_t status;
-  copi &= 3;
-  cipo &= 3;
-  sck  &= 3;
-
-  if ((copi == 3) && (cipo == 0) && (sck == 2))
-    status =  PIN_MNGR_OK;
-  else
-    status =  ERROR;
-
-  return status;
-}
-```
-
-Or, more cryptically, in a single line:
-
-```
-return (   ((copi & 3) == 3) && 
-           ((cipo & 3) == 0) && 
-           ((sck  & 3) == 2)      ) ? PIN_MGR_OK : ERROR;
-```
-
-And you could shorten the SPI bank check in ```nrf_driver_configure```
-
-```
-   uint8_t spi_sck, spi_copi, spi_cipo, count;
-
-   spi_sck  = (pins->sck  & 8) >> 3;
-   spi_copi = (pins->copi & 8) >> 3;
-   spi_cipo = (pins->cipo & 8) >> 3;
-
-   count = spi_sck + spi_copi + spi_cipo;
-
-   status = ((count == 3) || (count == 0)) ? PIN_MNGR_OK : ERROR;
-
-   // other lines
-
-     spi->instance = (count == 0) ? spi0 : spi1;
-
-   // other lines
-```
-
-Or...
-
-```
-   uint8_t spi_bank;
-
-   status = PIN_MNGR_OK;
-   spi_bank = (pins->sck  & 8) >> 3;                                // has to be 1 or 0
-   if ((pins->copi & 8) >> 3 != spi_bank) status = ERROR;
-   if ((pins->cipo & 8) >> 3 != spi_bank) status = ERROR;
-
-   // other lines
-
-     spi->instance = (spi_bank == 0) ? spi0 : spi1;
-
-   // other lines
-```
-
-### Addresses for nRF24L01
-
-This is my understanding of the addressing scheme.   
-Forget a notion that each nRF24L01 has 'an address'. This is not helpful. Each nRF24L01 can 'listen' to up to six addresses, and therefore process messages sent to these addresses.  
-
-<p align="center">
-  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01Addresses.jpg" width="800" title="nRF24L01 Addresses">
-</p>
-
-
 ### Pico Pi SPI mappings
 
 To check the SPI pins selected are valid, they must match the appropriate SPI bank and also be the right map for that pin type.   
@@ -234,4 +173,69 @@ SPI 1
 16        000 0 1 1 11
 ```
 
+
+### Potential simplifications to nrf24 library on Pico C
+
+```
+static fn_status_t pin_manager_validate(uint8_t copi, uint8_t cipo, uint8_t sck) {
+
+  // Can test the pins are valid by masking and comparing
+  fn_status_t status;
+  copi &= 3;
+  cipo &= 3;
+  sck  &= 3;
+
+  if ((copi == 3) && (cipo == 0) && (sck == 2))
+    status =  PIN_MNGR_OK;
+  else
+    status =  ERROR;
+
+  return status;
+}
+```
+
+Or, more cryptically, in a single line:
+
+```
+return (   ((copi & 3) == 3) && 
+           ((cipo & 3) == 0) && 
+           ((sck  & 3) == 2)      ) ? PIN_MGR_OK : ERROR;
+```
+
+And we can shorten the SPI bank check in ```nrf_driver_configure```
+
+```
+   uint8_t spi_sck, spi_copi, spi_cipo, count;
+
+   spi_sck  = (pins->sck  & 8) >> 3;
+   spi_copi = (pins->copi & 8) >> 3;
+   spi_cipo = (pins->cipo & 8) >> 3;
+
+   count = spi_sck + spi_copi + spi_cipo;
+
+   status = ((count == 3) || (count == 0)) ? PIN_MNGR_OK : ERROR;
+
+   // other lines
+
+     spi->instance = (count == 0) ? spi0 : spi1;
+
+   // other lines
+```
+
+Or...
+
+```
+   uint8_t spi_bank;
+
+   status = PIN_MNGR_OK;
+   spi_bank = (pins->sck  & 8) >> 3;                                // has to be 1 or 0
+   if ((pins->copi & 8) >> 3 != spi_bank) status = ERROR;
+   if ((pins->cipo & 8) >> 3 != spi_bank) status = ERROR;
+
+   // other lines
+
+     spi->instance = (spi_bank == 0) ? spi0 : spi1;
+
+   // other lines
+```
 
