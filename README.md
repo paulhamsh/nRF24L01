@@ -17,8 +17,8 @@ The Pico Pi eaxmples are derived from the ones here: https://github.com/AndyRids
 
 
 <p align="center">
-  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01_pinout.jpg" width="600" title="nRF24L01 pinout">
-  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nRF24L01_expander.jpg" width="600" title="nRF24L01 expander">
+  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nrf24L01_pinout.jpg" width="600" title="nRF24L01 pinout">
+  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nrf24L01_expander.jpg" width="600" title="nRF24L01 expander">
 </p>
 
 ### Build for Pico Pi (using wsl)
