@@ -29,7 +29,7 @@ The Pico Pi eaxmples are derived from the ones here: https://github.com/AndyRids
 
 ### nRF24L01 adapter board pinout
 <p align="center">
-  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nrf24L01_adapter.jpg" width="500" title="nRF24L01 adapter">
+  <img src="https://github.com/paulhamsh/nRF24L01/blob/main/nrf24L01_adapter.jpg" width="600" title="nRF24L01 adapter ">
 </p>
 
 ### Build for Pico Pi (using wsl)
