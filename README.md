@@ -4,12 +4,13 @@ Set up for the keyestrudio ESP32 board, an M5Stack Core 2 and two Pico Pis.
 
 Useful sources:
 ```
-Datasheet:         https://www.sparkfun.com/datasheets/Components/nRF24L01_prelim_prod_spec_1_2.pdf
-Nordic:            https://www.nordicsemi.com/Products/nRF24-series
-ESP32 library:     https://github.com/nRF24/RF24
-Documentation:     https://nrf24.github.io/RF24/
-Pico Pi library:   https://github.com/AndyRids/pico-nrf24
-                   (This is just one library but I like it - it is clear and logical)   
+Datasheet:            https://www.sparkfun.com/datasheets/Components/nRF24L01_prelim_prod_spec_1_2.pdf
+Nordic:               https://www.nordicsemi.com/Products/nRF24-series
+ESP32 library:        https://github.com/nRF24/RF24
+Documentation:        https://nrf24.github.io/RF24/
+Pico Pi library:      https://github.com/AndyRids/pico-nrf24
+                      (This is just one library but I like it - it is clear and logical)
+Pico Pi Micropython:  https://github.com/micropython/micropython-lib/tree/master/micropython/drivers/radio/nrf24l01
 ```                   
 
 The ESP examples here were heavily amended from a variety of sources.     
