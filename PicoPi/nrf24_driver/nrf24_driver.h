@@ -205,6 +205,8 @@ typedef struct nrf_client_s
   // switch NRF24L01 to RX Mode
   fn_status_t (*receiver_mode)(void);
 
+  // Added by Paul
+
   // size of dynamic read buffer
   fn_status_t (*read_packet_size)(uint8_t *size);
 
