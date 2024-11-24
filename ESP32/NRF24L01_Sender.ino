@@ -1,23 +1,18 @@
-// ESP 32 M5Core 2
-// ===============
+// ESP 32 keystudio
+// ================
 //
-//  38   MISO
+//  19   MISO
 //  18   SCK      MOSI   23
-//  3    CE       CSN    13
+//  16   CE       CSN    17
 //       GND      VCC
 
 #include <RF24.h>
-#include <M5Core2.h>
 
-RF24 radio(3, 13); // CE, CSN
+RF24 radio(16, 17); // CE, CSN
 const uint8_t address[5] = {0x31, 0x30, 0x30, 0x30, 0x30};
 
 void setup() {
-  M5.begin();
-  M5.Lcd.fillScreen(BLACK);
-  M5.Lcd.setTextSize(2); 
-  M5.Lcd.println("NRF24L01 Sender");
-  
+  Serial.begin(115200); 
   Serial.println("Starting configuration");
   SPI.begin();
   radio.begin();
@@ -27,7 +22,7 @@ void setup() {
   radio.openWritingPipe(address);
   radio.stopListening(); 
   Serial.println(radio.isChipConnected() ? "nRF24L01 ok" : "nRF24L01 not responding");
-  M5.Lcd.print(radio.isChipConnected() ? "nRF24L01 ok" : "nRF24L01 not responding"); 
+  radio.printDetails();
   radio.printPrettyDetails();
 
   Serial.println("Running");
@@ -36,12 +31,17 @@ void setup() {
 uint8_t dat[2] = {0x11, 0x22};
 
 void loop() {
+  bool status;
   Serial.print("Sending...");
   Serial.print(dat[0], HEX);
   Serial.print(" ");
-  Serial.println(dat[1], HEX);
+  Serial.print(dat[1], HEX);
+  Serial.print(" : ");
 
-  radio.write(&dat, 2);
+  status = radio.write(&dat, 2);
+  Serial.println(status ? "success" : "fail");
+
+
 
   dat[1]++;
   delay(1000);
