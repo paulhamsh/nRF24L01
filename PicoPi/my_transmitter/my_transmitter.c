@@ -34,14 +34,16 @@ int main(void)
     sleep_ms(10);
   }
 
+  printf("Started\n");
+
 
   // GPIO pin numbers
   pin_manager_t my_pins = {
-    .sck = 6,
-    .copi = 7,
-    .cipo = 4,
-    .csn = 3,
-    .ce = 2
+    .sck = 18,
+    .copi = 19,
+    .cipo = 16,
+    .csn = 17,
+    .ce = 22
   };
 
   nrf_manager_t my_config = {
@@ -49,36 +51,38 @@ int main(void)
     .address_width = AW_5_BYTES,
     .dyn_payloads = DYNPD_ENABLE,
     .data_rate = RF_DR_250KBPS,
-    .power = RF_PWR_NEG_12DBM,
+    .power = RF_PWR_0DBM,
     .retr_count = ARC_10RT,
-    .retr_delay = ARD_500US
+    .retr_delay = ARD_750US
   };
 
   uint32_t my_baudrate = 5000000;
 
   nrf_client_t my_nrf;
 
+  uint8_t payload[5] = {0x11, 0x22, 0x00, 0x00, 0x00};
+  fn_status_t success;
+
   nrf_driver_create_client(&my_nrf);
   my_nrf.configure(&my_pins, my_baudrate);
   my_nrf.initialise(&my_config);
+  //my_nrf.payload_size(ALL_DATA_PIPES, TWO_BYTES);
+  my_nrf.dyn_payloads_enable();
+  my_nrf.tx_destination((uint8_t[]) {0x31,0x30,0x30,0x30,0x30});
+  my_nrf.print_config();
   my_nrf.standby_mode();
 
-  uint8_t payload[5] = {0x11, 0x22, 0x00, 0x00, 0x00};
-
-
-  fn_status_t success = 0;
-
-
   while (1) {
-    // send to receiver's DATA_PIPE_0 address
-    my_nrf.tx_destination((uint8_t[]) {0x31,0x30,0x30,0x30,0x30});
     success = my_nrf.send_packet(payload, 2);
+    printf("Packet sent:- 0x%x 0x%x\n", payload[0], payload[1]);
 
     if (success)
-      printf("\nPacket sent:- 0x%x 0x%x\n", payload[0], payload[1]);
+      printf("Packet ok\n");
     else
-      printf("\nPacket not sent:- Receiver not available.\n");
+      printf("Packet not sent %x\n", success);
 
+
+    //payload.two++;
     payload[1]++;
 
     sleep_ms(3000);
