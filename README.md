@@ -204,16 +204,19 @@ nrf_driver_read_packet_size() - to find out the size of the next dynamic packet
 nrf_print_config() - to print the nrf24 config setting to stdio 
 ```
 
-Add code to nrf24_driver.c    
+Add code to nrf24_driver.c:    
 
 At line 18:
-
 ```
 #include <stdio.h>
 ```
 
-Then around line 1015:
+Then around line 98:
+```
+static fn_status_t r_register_bytes(register_map_t reg, uint8_t *buffer, size_t buffer_size);
+```
 
+Then around line 1015:
 ```
 /**
  * Read the size of an available packet in the RX FIFO
