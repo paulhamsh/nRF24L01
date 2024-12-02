@@ -254,7 +254,7 @@ fn_status_t nrf_driver_read_packet_size(uint8_t *size) {
 
   spi_manager_deinit_spi(spi->instance);
   return status;
-
+}
 
 /**
  * Print the config information to stdio
