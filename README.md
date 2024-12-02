@@ -206,6 +206,14 @@ nrf_print_config() - to print the nrf24 config setting to stdio
 
 Add code to nrf24_driver.c    
 
+At line 18:
+
+```
+#include <stdio.h>
+```
+
+Then around line 1015:
+
 ```
 /**
  * Read the size of an available packet in the RX FIFO
@@ -316,7 +324,6 @@ char *addr_to_print_names[NUMBER_ADDR]={
   "RX_ADDR_P5"
 };
 
-#include <stdio.h>
 
 void nrf_print_config() {
   spi_manager_t *spi = &(nrf_driver.user_spi);
