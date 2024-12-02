@@ -196,6 +196,14 @@ Or...
 
 ### Adding new function in Pico Pi library
 
+
+This adds two new functions:
+
+```
+nrf_driver_read_packet_size() - to find out the size of the next dynamic packet
+nrf_print_config() - to print the nrf24 config setting to stdio 
+```
+
 Add code to nrf24_driver.c    
 
 ```
@@ -235,6 +243,106 @@ fn_status_t nrf_driver_read_packet_size(uint8_t *size) {
 
   spi_manager_deinit_spi(spi->instance);
   return status;
+
+
+/**
+ * Print the config information to stdio
+ */
+
+#define NUMBER_REGS 19
+uint8_t regs_to_print[NUMBER_REGS]={
+  CONFIG,
+  EN_AA,
+  EN_RXADDR,
+  SETUP_AW,
+  SETUP_RETR,
+  RF_CH,
+  RF_SETUP,
+  STATUS,
+  OBSERVE_TX,
+  RPD,
+  RX_PW_P0,
+  RX_PW_P1,
+  RX_PW_P2,
+  RX_PW_P3,
+  RX_PW_P4,
+  RX_PW_P5,
+  FIFO_STATUS,
+  DYNPD,
+  FEATURE
+};
+
+char *regs_to_print_names[NUMBER_REGS]={
+  "CONFIG     ",
+  "EN_AA      ",
+  "EN_RXADDR  ",
+  "SETUP_AW   ",
+  "SETUP_RETR ",
+  "RF_CH      ",
+  "RF_SETUP   ",
+  "STATUS     ",
+  "OBSERVE_TX ",
+  "RPD        ",
+  "RX_PW_P0   ",
+  "RX_PW_P1   ",
+  "RX_PW_P2   ",
+  "RX_PW_P3   ",
+  "RX_PW_P4   ",
+  "RX_PW_P5   ",
+  "FIFO_STATUS",
+  "DYNPD      ",
+  "FEATURE    "
+};
+
+
+#define NUMBER_ADDR 7
+uint8_t addr_to_print[NUMBER_ADDR]={
+  TX_ADDR,
+  RX_ADDR_P0,
+  RX_ADDR_P1,
+  RX_ADDR_P2,
+  RX_ADDR_P3,
+  RX_ADDR_P4,
+  RX_ADDR_P5
+};
+
+char *addr_to_print_names[NUMBER_ADDR]={
+  "TX_ADDR",
+  "RX_ADDR_P0",
+  "RX_ADDR_P1",
+  "RX_ADDR_P2",
+  "RX_ADDR_P3",
+  "RX_ADDR_P4",
+  "RX_ADDR_P5"
+};
+
+#include <stdio.h>
+
+static void nrf_print_config() {
+  spi_manager_t *spi = &(nrf_driver.user_spi);
+
+  spi_manager_init_spi(spi->instance, spi->baudrate);
+
+  uint8_t val;
+
+  for (int i = 0; i < NUMBER_REGS; i++) {
+    val = r_register_byte(regs_to_print[i]);
+    printf("%s\t\t%2x\n", regs_to_print_names[i],val);
+  };
+
+  uint8_t addr[5];
+  for (int i = 0; i <= 2; i++) {
+    r_register_bytes(addr_to_print[i], addr, 5);
+    printf("%s \t %x %x %x %x %x\n", addr_to_print_names[i], addr[0], addr[1], addr[2], addr[3], addr[4]);
+  }
+
+  for (int i = 3; i < NUMBER_ADDR; i++) {
+    r_register_bytes(addr_to_print[i], addr, 1);
+    printf("%s \t %x\n", addr_to_print_names[i], addr[0]);
+  }
+
+  spi_manager_deinit_spi(spi->instance);
+}
 ```
 
 Add to ```nrf24_driver.h``` in ```nrf_client_t``` as a new function    
@@ -247,6 +355,9 @@ typedef struct nrf_client_s
 
   // size of dynamic read buffer
   fn_status_t (*read_packet_size)(uint8_t *size);
+
+  //print configuration
+  void (*print_config)();
 } nrf_client_t;
 ```
 
@@ -256,6 +367,7 @@ Add to  ```nrf24_driver.c``` in ```nrf_driver_create_client``` so it can be call
 fn_status_t nrf_driver_create_client(nrf_client_t *client) {
    // ....
   client->read_packet_size = nrf_driver_read_packet_size;
+  client->print_config = nrf_print_config;
 
   return NRF_MNGR_OK;
 }
