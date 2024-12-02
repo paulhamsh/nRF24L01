@@ -318,7 +318,7 @@ char *addr_to_print_names[NUMBER_ADDR]={
 
 #include <stdio.h>
 
-static void nrf_print_config() {
+void nrf_print_config() {
   spi_manager_t *spi = &(nrf_driver.user_spi);
 
   spi_manager_init_spi(spi->instance, spi->baudrate);
