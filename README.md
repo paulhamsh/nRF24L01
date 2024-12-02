@@ -328,7 +328,7 @@ char *addr_to_print_names[NUMBER_ADDR]={
 };
 
 
-void nrf_print_config() {
+fn_status_t nrf_print_config() {
   spi_manager_t *spi = &(nrf_driver.user_spi);
 
   spi_manager_init_spi(spi->instance, spi->baudrate);
@@ -352,6 +352,8 @@ void nrf_print_config() {
   }
 
   spi_manager_deinit_spi(spi->instance);
+
+  return NRF_MNGR_OK;
 }
 ```
 
@@ -367,7 +369,7 @@ typedef struct nrf_client_s
   fn_status_t (*read_packet_size)(uint8_t *size);
 
   //print configuration
-  void (*print_config)();
+  fn_status_t (*print_config)(void);
 } nrf_client_t;
 ```
 
